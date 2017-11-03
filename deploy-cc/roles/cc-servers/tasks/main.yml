@@ -1,9 +1,11 @@
 # deploy to cc servers
 
 ---
-- copy: copy source code and op scripts tar package to remote
+- name: copy source code and op scripts tar package to remote
+  copy:
     src: "{{ item }}"
-    dest: /home/work/ansible_workspace/
-    with_fileglob:
-        - "/home/work/deploy-packages/saeServers_V2/CC/2.0.2898/*.tar.gz"
+    dest: "/home/work/ansible_workspace/"
+    backup: yes
+  with_fileglob:
+    - "/home/work/deploy-packages/saeServers_V2/CC/2.0.2898/*.tar.gz"
 
