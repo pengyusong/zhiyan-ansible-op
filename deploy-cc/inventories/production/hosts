@@ -1,0 +1,12 @@
+[data-servers]
+DATA-Prod-TP1
+
+[cc-servers]
+CC-Prod-TP1
+
+[gw-servers-t]
+GateWay-Prod-T1
+
+[gw-servers-p]
+GateWay-Prod-P1
+
