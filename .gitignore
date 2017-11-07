@@ -1,3 +1,7 @@
+# add by pengyusong
+ansible-retry/
+vault_password_file
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -24,7 +28,6 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-ansible-retry/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

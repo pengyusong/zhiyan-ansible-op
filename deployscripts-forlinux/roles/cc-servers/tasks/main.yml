@@ -12,5 +12,5 @@
   with_fileglob:
     - "/home/work/deploy-packages/saeServers_V2/CC/{{ cc_version }}/*.tar.gz"
 
-- name: untar source code package and restart services
+#- name: untar source code package and restart services
 
