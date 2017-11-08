@@ -18,6 +18,7 @@
   unarchive: 
     src: "{{ src_op_tar_gz }}"
     dest: "{{ online_runpath }}"
+    extra_opts: [--strip-components=1]
   ignore_errors: '{{ ansible_check_mode }}'
 
 #
@@ -35,11 +36,10 @@
     backup: yes
 
 - name: start online sgw module
-  shell: sgw_online_20.sh {{ sgw_version }} >> {{ sgw_version }}
+  shell: "source /home/work/.bash_profile && /bin/bash {{ online_runpath }}/sgw_online_20.sh {{ sgw_version }} >> {{ sgw_version }}"
   args:
     chdir: "{{ online_runpath }}"
-    creates: {{ sgw_version }}
-    executable: /bin/bash
+    creates: "{{ sgw_version }}"
 
 - name: add backup log crontab task
   cron:
