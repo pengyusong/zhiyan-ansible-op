@@ -1,11 +1,11 @@
 ---
 - name: deploy sgw to gw-servers-t
-  hosts: gw-servers
+  hosts: gw-servers-t
   remote_user: work
   # remote_user: user
   # become: yes
   # become_method: sudo
   
   roles:
-    - gw-servers-t
+    - sgw-modules-t
 

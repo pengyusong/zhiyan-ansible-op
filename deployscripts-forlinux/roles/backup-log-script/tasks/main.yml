@@ -1,7 +1,6 @@
 # deploy backup log script
-
+#
 ---
-
 - name: check remote directory exist
   file: path={{remote_sae_path}} state=directory
 
@@ -12,10 +11,11 @@
     extra_opts: [--strip-components=1]
   when: not ansible_check_mode
 
-- name: start online backup log script
-  shell: "sed -i 's/WHERE = 0/WHERE = 2/g' timescripts/backup_log_saei/config.py"
-  args:
-    chdir: "{{remote_sae_path}}"
+- name: change config.py WHERE value to 2
+  lineinfile: 
+    dest: "{{remote_sae_path}}/timescripts/backup_log_saei/config.py"
+    regexp: "^WHERE = "
+    line: "WHERE = 2"
 
 - name: add backup log crontab task
   cron:

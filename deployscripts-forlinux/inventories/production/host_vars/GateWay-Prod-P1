@@ -3,3 +3,4 @@ ansible_port: 22
 ansible_user: work
 ansible_ssh_pass: zhiyan580.work
 ansible_ssh_private_key_file: /home/work/sshkeys/op_deploy_key
+ansible_python_interpreter: /home/work/tools/python2.7.13/bin/python
