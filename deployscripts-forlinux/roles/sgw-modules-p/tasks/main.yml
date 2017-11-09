@@ -1,4 +1,4 @@
-# deploy to cc servers
+# deploy sgw.tar.gz for publish env
 
 ---
 - name: set current datetime var fact
@@ -36,17 +36,8 @@
     backup: yes
 
 - name: start online sgw module
-  shell: "source /home/work/.bash_profile && /bin/bash {{ online_runpath }}/sgw_online_20.sh {{ sgw_version }} >> {{ sgw_version }}"
+  shell: "source /home/work/.bash_profile && /bin/bash {{ online_runpath }}/sgw_online_21.sh {{ sgw_version }} >> {{ sgw_version }}"
   args:
     chdir: "{{ online_runpath }}"
     creates: "{{ sgw_version }}"
-
-- name: add backup log crontab task
-  cron:
-    name: "backup log"
-    job: "/home/work/tools/python2.7.13/bin/python /home/work/production/V2/saeServers/timescripts/backup_log_saei/backup_log.py >/dev/null 2>&1"
-    minute: 10
-    hour: 3
-    weekday: 3,6
-    backup: yes
 

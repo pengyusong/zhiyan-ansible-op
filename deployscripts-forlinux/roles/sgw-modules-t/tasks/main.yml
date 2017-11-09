@@ -1,0 +1,43 @@
+# deploy sgw.tar.gz for test env
+
+---
+- name: set current datetime var fact
+  set_fact: 
+    online_datetime: "{{lookup('pipe','date +%Y%m%d-%H%M%S')}}"
+  delegate_to: 127.0.0.1
+
+- name: set run path var fact
+  set_fact: 
+    online_runpath: "/home/work/.online/SGW/{{ online_datetime }}"
+  delegate_to: 127.0.0.1
+
+- name: create remote online directory
+  file: path={{ online_runpath }} state=directory
+
+- name: copy and untar op scripts to remote online directory
+  unarchive: 
+    src: "{{ src_op_tar_gz }}"
+    dest: "{{ online_runpath }}"
+    extra_opts: [--strip-components=1]
+  ignore_errors: '{{ ansible_check_mode }}'
+
+#
+# lookup datetime 必须在这里定义, 在 vars 中会导致每次使用都是不一样的值
+#######################################################################################
+
+
+- name: create remote package directories
+  file: path={{ online_packagepath }} state=directory
+
+- name: copy sgw.tar.gz package to the ansible workspace
+  copy:
+    src: "{{ src_sgw_tar_gz }}"
+    dest: "{{ online_packagepath }}"
+    backup: yes
+
+- name: start online sgw module
+  shell: "source /home/work/.bash_profile && /bin/bash {{ online_runpath }}/sgw_online_20.sh {{ sgw_version }} >> {{ sgw_version }}"
+  args:
+    chdir: "{{ online_runpath }}"
+    creates: "{{ sgw_version }}"
+

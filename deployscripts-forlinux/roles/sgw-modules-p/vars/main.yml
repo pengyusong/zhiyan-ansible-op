@@ -1,3 +1,4 @@
+---
 src_sgw_tar_gz: "/home/work/deploy-packages/saeServers_V2/SGW/{{ sgw_version }}/sgw.tar.gz"
 src_op_tar_gz: "/home/work/deploy-packages/saeServers_V2/SGW/{{ sgw_version }}/op.tar.gz"
 online_packagepath: "/home/work/ansible_workspace/SGW/{{ sgw_version }}"

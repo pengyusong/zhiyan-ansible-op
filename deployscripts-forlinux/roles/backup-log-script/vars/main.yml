@@ -1,0 +1,4 @@
+---
+src_ts_backup_log_tar_gz: "/home/work/deploy-packages/saeServers_V2/TS_BACKUP_LOG/ts_backup_log.tar.gz"
+remote_sae_path: "/home/work/production/V2/saeServers"
+

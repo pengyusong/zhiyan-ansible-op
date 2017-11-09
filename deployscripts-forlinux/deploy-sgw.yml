@@ -1,6 +1,6 @@
 ---
 - name: deploy sgw to gw-servers-t
-  hosts: gw-servers-t
+  hosts: gw-servers
   remote_user: work
   # remote_user: user
   # become: yes

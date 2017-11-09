@@ -4,9 +4,21 @@ DATA-Prod-TP1
 [cc-servers]
 CC-Prod-TP1
 
+[gw-servers]
+GateWay-Prod-T1
+GateWay-Prod-P1
+
 [gw-servers-t]
 GateWay-Prod-T1
 
 [gw-servers-p]
 GateWay-Prod-P1
+
+[backup-log-servers]
+CC-Prod-TP1
+GateWay-Prod-T1
+GateWay-Prod-P1
+
+[cc-scripts-servers]
+CC-Prod-TP1
 
