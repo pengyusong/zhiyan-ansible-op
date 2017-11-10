@@ -19,7 +19,7 @@
     src: "{{ src_op_tar_gz }}"
     dest: "{{ online_runpath }}"
     extra_opts: [--strip-components=1]
-  ignore_errors: '{{ ansible_check_mode }}'
+  when: not ansible_check_mode
 
 #
 # lookup datetime 必须在这里定义, 在 vars 中会导致每次使用都是不一样的值
@@ -36,7 +36,7 @@
     backup: yes
 
 - name: start online sgw module
-  shell: "source /home/work/.bash_profile && /bin/bash {{ online_runpath }}/sgw_online_21.sh {{ sgw_version }} >> {{ sgw_version }}"
+  shell: "source /home/work/.bash_profile && /bin/bash {{ online_runpath }}/sgw_module_online_21.sh {{ sgw_version }} >> {{ sgw_version }}"
   args:
     chdir: "{{ online_runpath }}"
     creates: "{{ sgw_version }}"

@@ -8,7 +8,6 @@
   unarchive:
     src: "{{ src_ts_backup_log_tar_gz }}"
     dest: "{{ remote_sae_path }}"
-    extra_opts: [--strip-components=1]
   when: not ansible_check_mode
 
 - name: change config.py WHERE value to 2

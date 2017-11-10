@@ -1,5 +1,5 @@
 ---
-- name: deploy sgw to gw-servers-t
+- name: deploy sgw module to gw-servers-t
   hosts: gw-servers-t
   remote_user: work
   # remote_user: user

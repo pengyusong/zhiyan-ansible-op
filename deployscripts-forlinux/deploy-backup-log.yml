@@ -1,5 +1,5 @@
 ---
-- name: deploy backup log scripts
+- name: deploy backup log script to back up log servers (linux)
   hosts: backup-log-servers
   remote_user: work
   # remote_user: user
