@@ -1,27 +1,21 @@
 # deploy backup log script
 #
 ---
-- name: check remote directory exist
-  file: path={{remote_sae_path}} state=directory
+- name: set host type - saca or tca
+  set_fact:
+    the_type: "{{ 'TCA' if inventory_hostname | upper | match('TCA-.*') else 'SACA' }}"
 
-- name: copy and untar ts backup log scripts to remote directory
-  unarchive:
-    src: "{{ src_ts_backup_log_tar_gz }}"
-    dest: "{{ remote_sae_path }}"
-  when: not ansible_check_mode
+- name: create firewall rules to allow tca and saca servers web interface
+  win_firewall_rule:
+    action: "allow"
+    description: "{{ '暴露TCA服务给CC集群服务器' if the_type == 'TCA' else '暴露SACA 和 SAEI服务给CC集群服务器' }}"
+    direction: "in"
+    enabled: yes
+    localport: "{{ TCA_ALLOW_PORTS if the_type == 'TCA' else SACA_ALLOW_PORTS }}"
+    name: "{{ 'Allow TCA Web Receive Connection' if the_type == 'TCA' else 'Allow SACA And SAEI Web Receive Connection' }}"
+    protocol: "tcp"
+    remoteip: "{{ CC_SERVER_IPS }}"
+    state: "present"
 
-- name: change config.py WHERE value to 2
-  lineinfile: 
-    dest: "{{remote_sae_path}}/timescripts/backup_log_saei/config.py"
-    regexp: "^WHERE = "
-    line: "WHERE = 2"
-
-- name: add backup log crontab task
-  cron:
-    name: "backup log"
-    job: "/home/work/tools/python2.7.13/bin/python /home/work/production/V2/saeServers/timescripts/backup_log_saei/backup_log.py >/dev/null 2>&1"
-    minute: 10
-    hour: 3
-    weekday: 3,6
-    backup: yes
-
+#- name: debug var
+#  debug: var=hostvars[inventory_hostname]

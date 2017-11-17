@@ -1,11 +1,8 @@
 ---
-- name: deploy backup log script to back up log servers (linux)
-  hosts: backup-log-servers
-  remote_user: work
-  # remote_user: user
-  # become: yes
-  # become_method: sudo
+- name: deploy firewall rules for tca and saca servers (windows)
+  hosts: all
+  remote_user: Administrator
   
   roles:
-    - backup-log-script
+    - firewall-rules
 

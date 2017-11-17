@@ -1,4 +1,5 @@
 ---
-src_ts_backup_log_tar_gz: "/home/work/deploy-packages/saeServers_V2/TS_BACKUP_LOG/ts_backup_log.tar.gz"
-remote_sae_path: "/home/work/production/V2/saeServers"
+TCA_ALLOW_PORTS: "6100"
+SACA_ALLOW_PORTS: "5800,20000-30000"
+CC_SERVER_IPS: "10.46.225.250"
 
