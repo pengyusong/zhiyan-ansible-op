@@ -1,0 +1,44 @@
+# deploy cc{0|1|2}.tar.gz
+
+---
+- name: set current datetime var fact
+  set_fact: 
+    online_datetime: "{{lookup('pipe','date +%Y%m%d-%H%M%S')}}"
+    delegate_to: 127.0.0.1
+
+- name: set run path var fact
+  set_fact: 
+    online_runpath: "/home/work/.online/CC/{{ online_datetime }}"
+    delegate_to: 127.0.0.1
+
+- name: create remote online directory
+  file: path={{ online_runpath }} state=directory
+
+- name: copy and untar op scripts to remote online directory
+  unarchive: 
+    src: "{{ src_op_tar_gz }}"
+    dest: "{{ online_runpath }}"
+    extra_opts: [--strip-components=1]
+  when: not ansible_check_mode
+    
+#
+## lookup datetime 必须在这里定义, 在 vars 中会导致每次使用都是不一样的值
+########################################################################################
+
+- name: create remote package directories
+  file: path={{ online_packagepath }} state=directory
+
+- name: copy cc{0|1|2}.tar.gz package to the ansible workspace
+  copy:
+    src: "{{ item }}"
+    dest: "{{ online_packagepath }}"
+    backup: yes
+  with_fileglob:
+    - "{{ src_ccx_tar_gz_path }}/cc*.tar.gz"
+
+- name: start online cc module
+  shell: "source /home/work/.bash_profile && /bin/bash {{ online_runpath }}/cc_module_online.sh {{ cc_version }} >> {{ cc_version }}"
+  args:
+    chdir: "{{ online_runpath }}"
+    creates: "{{ cc_version }}"
+

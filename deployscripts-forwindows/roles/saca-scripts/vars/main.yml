@@ -1,0 +1,4 @@
+---
+src_ccx_tar_gz_path: "/home/work/deploy-packages/saeServers_V2/CC/{{ cc_version }}"
+src_op_tar_gz: "/home/work/deploy-packages/saeServers_V2/CC/{{ cc_version }}/op.tar.gz"
+online_packagepath: "/home/work/ansible_workspace/CC/{{ cc_version }}"
