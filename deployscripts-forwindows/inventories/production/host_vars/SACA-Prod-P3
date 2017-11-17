@@ -1,0 +1,7 @@
+
+ansible_host: "{{ vault_saca_prod_p3_host }}"
+ansible_user: "{{ vault_user }}"
+ansible_password: "{{ vault_saca_prod_p3_password }}"
+ansible_port: "{{ vault_port }}"
+ansible_connection: "{{ vault_connection }}"
+ansible_winrm_server_cert_validation: ignore
