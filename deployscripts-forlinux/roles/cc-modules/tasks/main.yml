@@ -1,14 +1,14 @@
 # deploy cc{0|1|2}.tar.gz
 
 ---
-- name: set current datetime var fact
-  set_fact: 
-    online_datetime: "{{lookup('pipe','date +%Y%m%d-%H%M%S')}}"
-    delegate_to: 127.0.0.1
+#- name: set current datetime var fact
+#  set_fact: 
+#    online_datetime: "{{lookup('pipe','date +%Y%m%d-%H%M%S')}}"
+#    delegate_to: 127.0.0.1
 
 - name: set remote ansible online path var fact
   set_fact: 
-    remote_ansible_online_path: "/home/work/.ansible_online/CC/{{ online_datetime }}"
+    remote_ansible_online_path: "/home/work/.ansible_online/CC/{{ version }}"
     delegate_to: 127.0.0.1
 
 - name: check remote ansible online path exist

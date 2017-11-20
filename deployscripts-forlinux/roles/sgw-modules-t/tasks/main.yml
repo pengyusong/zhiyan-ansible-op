@@ -1,14 +1,14 @@
 # deploy sgw.tar.gz for test env
 
 ---
-- name: set current datetime var fact
-  set_fact: 
-    online_datetime: "{{lookup('pipe','date +%Y%m%d-%H%M%S')}}"
-  delegate_to: 127.0.0.1
+#- name: set current datetime var fact
+#  set_fact: 
+#    online_datetime: "{{lookup('pipe','date +%Y%m%d-%H%M%S')}}"
+#  delegate_to: 127.0.0.1
 
-- name: set run path var fact
+- name: set remote ansible online path var fact
   set_fact: 
-    remote_ansible_online_path: "/home/work/.ansible_online/SGW/{{ online_datetime }}"
+    remote_ansible_online_path: "/home/work/.ansible_online/SGW/{{ version }}"
   delegate_to: 127.0.0.1
 
 - name: check remote ansible online path exist
