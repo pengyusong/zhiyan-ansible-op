@@ -1,11 +1,8 @@
 ---
-- name: deploy cc scripts sync_apps/app_status_report/timeout_proc to cc servers
-  hosts: cc-servers
-  remote_user: work
-  # remote_user: user
-  # become: yes
-  # become_method: sudo
+- name: deploy tca modules to tca node agents
+  hosts: tca-servers
+  remote_user: Administrator
   
   roles:
-    - cc-scripts
+    - tca-modules
 

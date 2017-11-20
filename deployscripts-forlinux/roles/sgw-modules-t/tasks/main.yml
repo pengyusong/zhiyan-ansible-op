@@ -8,16 +8,16 @@
 
 - name: set run path var fact
   set_fact: 
-    online_runpath: "/home/work/.online/SGW/{{ online_datetime }}"
+    remote_ansible_online_path: "/home/work/.ansible_online/SGW/{{ online_datetime }}"
   delegate_to: 127.0.0.1
 
-- name: create remote online directory
-  file: path={{ online_runpath }} state=directory
+- name: check remote ansible online path exist
+  file: path={{ remote_ansible_online_path }} state=directory
 
-- name: copy and untar op scripts to remote online directory
+- name: copy and untar op scripts to remote ansible online path
   unarchive: 
-    src: "{{ src_op_tar_gz }}"
-    dest: "{{ online_runpath }}"
+    src: "{{ local_op_tar_gz_filepath }}"
+    dest: "{{ remote_ansible_online_path }}"
     extra_opts: [--strip-components=1]
   when: not ansible_check_mode
 
@@ -26,18 +26,18 @@
 #######################################################################################
 
 
-- name: create remote package directories
-  file: path={{ online_packagepath }} state=directory
+- name: check remote ansible workspace path exist
+  file: path={{ remote_ansible_workspace_path }} state=directory
 
-- name: copy sgw.tar.gz package to the ansible workspace
+- name: copy sgw.tar.gz package to remote ansible workspace path
   copy:
-    src: "{{ src_sgw_tar_gz }}"
-    dest: "{{ online_packagepath }}"
+    src: "{{ local_sgw_tar_gz_filepath }}"
+    dest: "{{ remote_ansible_workspace_path }}"
     backup: yes
 
 - name: start online sgw module
-  shell: "source /home/work/.bash_profile && /bin/bash {{ online_runpath }}/sgw_module_online_20.sh {{ sgw_version }} >> {{ sgw_version }}"
+  shell: "source /home/work/.bash_profile && /bin/bash {{ remote_ansible_online_path }}/sgw_module_online_20.sh {{ version }} >> {{ version }}"
   args:
-    chdir: "{{ online_runpath }}"
-    creates: "{{ sgw_version }}"
+    chdir: "{{ remote_ansible_online_path }}"
+    creates: "{{ version }}"
 

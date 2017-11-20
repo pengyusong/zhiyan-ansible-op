@@ -1,0 +1,7 @@
+---
+local_timescripts_zipfilepath: "/home/work/deploy-packages/saeServers_V2/WIN_TIMESCRIPTS/{{ version }}/timescripts.zip"
+remote_package_path: "D:\\ansible_workspace\\WIN_TIMESCRIPTS\\{{ version }}"
+remote_package_filepath: "{{ remote_package_path }}\\timescripts.zip"
+remote_sae_path: "D:\\production\\V2\\saeServers"
+configfilepath_backup_log_saei: "{{ remote_sae_path }}\\timescripts\\backup_log_saei\\config.py"
+configfilepath_restart_saei: "{{ remote_sae_path }}\\timescripts\\start_saei_for_reboot\\config.py"

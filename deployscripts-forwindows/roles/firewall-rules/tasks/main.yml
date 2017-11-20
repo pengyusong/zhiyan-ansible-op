@@ -1,18 +1,18 @@
 # deploy backup log script
 #
 ---
-- name: set host type - saca or tca
+- name: set the host type - SACA or TCA
   set_fact:
-    the_type: "{{ 'TCA' if inventory_hostname | upper | match('TCA-.*') else 'SACA' }}"
+    the_host_type: "{{ 'TCA' if inventory_hostname | upper | match('TCA-.*') else 'SACA' }}"
 
 - name: create firewall rules to allow tca and saca servers web interface
   win_firewall_rule:
     action: "allow"
-    description: "{{ '暴露TCA服务给CC集群服务器' if the_type == 'TCA' else '暴露SACA 和 SAEI服务给CC集群服务器' }}"
+    description: "{{ '暴露TCA服务给CC集群服务器' if the_host_type == 'TCA' else '暴露SACA 和 SAEI服务给CC集群服务器' }}"
     direction: "in"
     enabled: yes
-    localport: "{{ TCA_ALLOW_PORTS if the_type == 'TCA' else SACA_ALLOW_PORTS }}"
-    name: "{{ 'Allow TCA Web Receive Connection' if the_type == 'TCA' else 'Allow SACA And SAEI Web Receive Connection' }}"
+    localport: "{{ TCA_ALLOW_PORTS if the_host_type == 'TCA' else SACA_ALLOW_PORTS }}"
+    name: "{{ 'Allow TCA Web Receive Connection' if the_host_type == 'TCA' else 'Allow SACA And SAEI Web Receive Connection' }}"
     protocol: "tcp"
     remoteip: "{{ CC_SERVER_IPS }}"
     state: "present"

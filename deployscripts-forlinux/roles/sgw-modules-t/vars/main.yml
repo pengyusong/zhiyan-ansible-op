@@ -1,4 +1,4 @@
 ---
-src_sgw_tar_gz: "/home/work/deploy-packages/saeServers_V2/SGW/{{ sgw_version }}/sgw.tar.gz"
-src_op_tar_gz: "/home/work/deploy-packages/saeServers_V2/SGW/{{ sgw_version }}/op.tar.gz"
-online_packagepath: "/home/work/ansible_workspace/SGW/{{ sgw_version }}"
+local_sgw_tar_gz_filepath: "/home/work/deploy-packages/saeServers_V2/SGW/{{ version }}/sgw.tar.gz"
+local_op_tar_gz_filepath: "/home/work/deploy-packages/saeServers_V2/SGW/{{ version }}/op.tar.gz"
+remote_ansible_workspace_path: "/home/work/ansible_workspace/SGW/{{ version }}"

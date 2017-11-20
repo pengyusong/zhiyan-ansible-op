@@ -1,11 +1,8 @@
 ---
-- name: deploy cc module to cc servers
-  hosts: cc-servers
+- name: deploy saca(include saei) modules to saca node agents
+  hosts: saca-servers
   remote_user: work
-  # remote_user: user
-  # become: yes
-  # become_method: sudo
   
   roles:
-    - cc-modules
+    - saca-modules
 
