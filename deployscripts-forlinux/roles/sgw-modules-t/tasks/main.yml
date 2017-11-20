@@ -26,13 +26,13 @@
 #######################################################################################
 
 
-- name: check remote ansible workspace path exist
-  file: path={{ remote_ansible_workspace_path }} state=directory
+- name: check remote package path exist
+  file: path={{ remote_package_path }} state=directory
 
-- name: copy sgw.tar.gz package to remote ansible workspace path
+- name: copy sgw.tar.gz package to remote package path
   copy:
     src: "{{ local_sgw_tar_gz_filepath }}"
-    dest: "{{ remote_ansible_workspace_path }}"
+    dest: "{{ remote_package_path }}"
     backup: yes
 
 - name: start online sgw module

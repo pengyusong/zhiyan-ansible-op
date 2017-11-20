@@ -1,4 +1,4 @@
 ---
 local_ccx_path: "/home/work/deploy-packages/saeServers_V2/CC/{{ version }}"
 local_op_tar_gz_filepath: "/home/work/deploy-packages/saeServers_V2/CC/{{ version }}/op.tar.gz"
-remote_ansible_workspace_path: "/home/work/ansible_workspace/CC/{{ version }}"
+remote_package_path: "/home/work/ansible_workspace/CC/{{ version }}"

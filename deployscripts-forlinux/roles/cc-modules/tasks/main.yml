@@ -25,13 +25,13 @@
 ## lookup datetime 必须在这里定义, 在 vars 中会导致每次使用都是不一样的值
 ########################################################################################
 
-- name: check remote ansible workspace path exist
-  file: path={{ remote_ansible_workspace_path }} state=directory
+- name: check remote package path exist
+  file: path={{ remote_package_path }} state=directory
 
-- name: copy cc{0|1|2}.tar.gz package to remote ansible workspace path
+- name: copy cc{0|1|2}.tar.gz package to remote package path
   copy:
     src: "{{ item }}"
-    dest: "{{ remote_ansible_workspace_path }}"
+    dest: "{{ remote_package_path }}"
     backup: yes
   with_fileglob:
     - "{{ local_ccx_path }}/cc*.tar.gz"
