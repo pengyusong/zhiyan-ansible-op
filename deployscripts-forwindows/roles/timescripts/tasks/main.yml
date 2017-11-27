@@ -21,7 +21,7 @@
   tags:
     - code
 
-# Windows 拷贝目录需要后缀 '\'
+# Windows 拷贝到目录需要后缀 '\'
 - name: copy timescripts.tar.gz to remote package path
   win_copy: 
     src: "{{ local_timescripts_zipfilepath }}"

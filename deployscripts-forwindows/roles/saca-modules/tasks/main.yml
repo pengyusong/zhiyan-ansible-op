@@ -1,4 +1,4 @@
-# deploy saca_saei{0|1|2}.tar.gz
+# deploy saca_saei{0|1|2}.zip
 
 ---
 #- name: set current datetime var fact
@@ -6,34 +6,62 @@
 #    online_datetime: "{{lookup('pipe','date +%Y%m%d-%H%M%S')}}"
 #    delegate_to: 127.0.0.1
 
-- name: set ansible online path var fact
+- name: set remote ansible online path var fact
   set_fact: 
-    ansible_online_path: "D:\\ansible_online\\WIN_SACA_SAEI\\{{ version }}"
+    remote_ansible_online_path: "D:\\ansible_online\\WIN_SACA_SAEI\\{{ version }}"
     delegate_to: 127.0.0.1
 
-- name: check ansible online path exist
-  file: path={{ online_path }} state=directory
+- name: check remote ansible online path exist
+  win_file: path={{ remote_ansible_online_path }} state=directory
 
 - name: check remote sae path exist
-  file: path={{ remote_sae_path }} state=directory
+  win_file: path={{ remote_sae_path }} state=directory
 
 - name: check remote package path exist
-  file: path={{ remote_package_path }} state=directory
+  win_file: path={{ remote_package_path }} state=directory
 
-# Windows 拷贝目录需要后缀 '\'
-- name: copy op.tar.gz to online path
+# Windows 拷贝到目录需要后缀 '\'
+- name: copy op.zip to online path
   win_copy:
     src: "{{ local_op_zipfilepath }}"
-    dest: "{{ ansible_online_path }}\\"
+    dest: "{{ remote_ansible_online_path }}\\"
     remote_src: no
+  register: copy_op_zip_result
 
 - name: unzip op scripts
   win_unzip: 
-    src: "{{ ansible_online_path }}\\op.zip"
-    dest: "{{ ansible_online_path }}"
-  when: not ansible_check_mode
+    src: "{{ remote_ansible_online_path }}\\op.zip"
+    dest: "{{ remote_ansible_online_path }}"
+  when: not ansible_check_mode and copy_op_zip_result.changed
     
+# Windows 拷贝到目录需要后缀 '\'
+- name: copy saca_saei{0|1|2}.zip to online path
+  win_copy:
+    src: "{{ item }}"
+    dest: "{{ remote_package_path }}\\"
+    remote_src: no
+  with_fileglob:
+    - "{{ local_saca_saei_xx_path }\\*.zip"
+  register: copy_saca_saei_zip_result
+
+- name: start online saca saei module
+  win_shell: "{{ remote_ansible_online_path }}\\ascripts_op\\WinSacaOnline.ps1 -OnlinePackageVersion {{ version }} >> {{ version }}"
+  args:
+    chdir: "{{ remote_ansible_online_path }}"
+    creates: "{{ version }}"
+
+- name: delete all scheduled tasks
+  win_shell: "{{ remote_ansible_online_path }}\\ascripts_op\\WinDeleteAllScheduledTasksForTcaOrSaca.ps1"
+  args:
+    chdir: "{{ remote_ansible_online_path }}"
+  when: delete_all_scheduled_tasks is defined and delete_all_scheduled_tasks == True
+
+- name: config all scheduled tasks
+  win_shell: "{{ remote_ansible_online_path }}\\ascripts_op\\WinConfigScheduledTasksForTcaOrSaca.ps1"
+  args:
+    chdir: "{{ remote_ansible_online_path }}"
+  when: config_all_scheduled_tasks is defined and config_all_scheduled_tasks == True
+
+#- debug: var=copy_op_zip_result
 #
-## lookup datetime 必须在这里定义, 在 vars 中会导致每次使用都是不一样的值
-########################################################################################
 
