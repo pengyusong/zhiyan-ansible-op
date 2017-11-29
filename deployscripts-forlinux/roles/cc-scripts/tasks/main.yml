@@ -9,7 +9,7 @@
 
 - name: set remote ansible online path var fact
   set_fact: 
-    remote_ansible_online_path: "/home/work/.ansible_online/TS_CC_SCRIPTS/{{ version }}"
+    remote_ansible_online_path: "/home/work/ansible_online/TS_CC_SCRIPTS/{{ version }}"
     delegate_to: 127.0.0.1
 
 - name: check remote ansible online exist
@@ -52,3 +52,11 @@
     name: "app status report"
     job: "/home/work/tools/python2.7.13/bin/python /home/work/production/V2/saeServers/timescripts/app_status_report/appstatus_report.py >/dev/null 2>&1"
     minute: "*/3"
+
+- name: kill inactive saei of test env
+  cron:
+    name: "kill inactive saei of test env"
+    job: "/home/work/tools/python2.7.13/bin/python /home/work/production/V2/saeServers/timescripts/kill_inactive_saei/kill_inactive_saei_of_test_env.py >/dev/null 2>&1"
+    weekday: 6,0
+    hour: 6
+

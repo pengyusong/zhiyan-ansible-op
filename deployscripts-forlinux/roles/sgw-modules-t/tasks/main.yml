@@ -8,7 +8,7 @@
 
 - name: set remote ansible online path var fact
   set_fact: 
-    remote_ansible_online_path: "/home/work/.ansible_online/SGW/{{ version }}"
+    remote_ansible_online_path: "/home/work/ansible_online/SGW/{{ version }}"
   delegate_to: 127.0.0.1
 
 - name: check remote ansible online path exist

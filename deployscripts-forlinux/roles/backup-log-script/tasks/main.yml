@@ -6,7 +6,7 @@
 
 - name: copy and untar ts backup log scripts to remote directory
   unarchive:
-    src: "{{ src_ts_backup_log_tar_gz }}"
+    src: "{{ local_ts_backup_log_tar_gz_filepath }}"
     dest: "{{ remote_sae_path }}"
   when: not ansible_check_mode
 
