@@ -57,6 +57,5 @@
   cron:
     name: "kill inactive saei of test env"
     job: "/home/work/tools/python2.7.13/bin/python /home/work/production/V2/saeServers/timescripts/kill_inactive_saei/kill_inactive_saei_of_test_env.py >/dev/null 2>&1"
-    weekday: 6,0
     hour: 6
 
