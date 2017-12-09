@@ -1,0 +1,7 @@
+---
+local_code_tgz_filepath: "/home/work/deploy-packages/saeServers_V2/ts_cc_scripts/{{ version }}/ts_cc_scripts.tgz"
+local_op_tgz_filepath: "/home/work/deploy-packages/saeServers_V2/ts_cc_scripts/{{ version }}/op.tgz"
+remote_code_path: "/home/work/ansible_workspace/ts_cc_scripts/{{ version }}"
+remote_op_path: "/home/work/ansible_online/ts_cc_scripts/{{ version }}"
+remote_sae_path: "/home/work/production/V2/saeServers"
+

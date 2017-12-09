@@ -1,0 +1,11 @@
+---
+- name: deploy ts cc scripts to cc-servers (linux)
+  hosts: cc-servers
+  remote_user: work
+  # remote_user: user
+  # become: yes
+  # become_method: sudo
+  
+  roles:
+    - ts-cc-scripts
+

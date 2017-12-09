@@ -1,8 +1,0 @@
----
-- name: deploy firewall rules for tca and saca servers (windows)
-  hosts: all
-  remote_user: Administrator
-  
-  roles:
-    - firewall-rules
-

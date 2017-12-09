@@ -1,8 +1,0 @@
----
-- name: deploy tca modules to tca node agents
-  hosts: tca-servers
-  remote_user: Administrator
-  
-  roles:
-    - tca-modules
-

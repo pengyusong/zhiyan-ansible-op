@@ -1,0 +1,55 @@
+# deploy cc scripts 
+#
+
+---
+#- name: set current datetime var fact
+#  set_fact: 
+#    online_datetime: "{{lookup('pipe','date +%Y%m%d-%H%M%S')}}"
+#    delegate_to: 127.0.0.1
+
+- name: check remote op path exist
+  file: path={{ remote_op_path }} state=directory
+
+- name: check remote code path exist
+  file: path={{ remote_code_path }} state=directory
+
+##################################################################
+
+- name: copy and unarchive op.tgz to remote op path
+  unarchive:
+    src: "{{ local_op_tgz_filepath }}"
+    dest: "{{ remote_op_path }}"
+    extra_opts: [--strip-components=1]
+  when: not ansible_check_mode
+
+###################################################################
+
+- name: copy ts_cc_scripts.tgz code package to remote code path
+  copy:
+    src: "{{ local_code_tgz_filepath }}"
+    dest: "{{ remote_code_path }}"
+
+- name: start online ts cc scripts
+  shell: "source /home/work/.bash_profile && /bin/bash {{remote_op_path}}/cc_scripts_online.sh {{ version }} >> online.log"
+  args:
+    chdir: "{{ remote_op_path }}"
+    creates: "online.log"
+
+- name: add <sync apps> crontab task
+  cron:
+    name: "sync apps"
+    job: "/home/work/tools/python2.7.13/bin/python {{remote_sae_path}}/timescripts/sync_apps/sync_apps.py >/dev/null 2>&1"
+    minute: "*/3"
+
+- name: add <app status report> crontab task
+  cron:
+    name: "app status report"
+    job: "/home/work/tools/python2.7.13/bin/python {{remote_sae_path}}/timescripts/app_status_report/appstatus_report.py >/dev/null 2>&1"
+    minute: "*/3"
+
+- name: add <kill inactive saei of test env> crontab task
+  cron:
+    name: "kill inactive saei of test env"
+    job: "/home/work/tools/python2.7.13/bin/python {{remote_sae_path}}/timescripts/kill_inactive_saei/kill_inactive_saei_of_test_env.py >/dev/null 2>&1"
+    hour: 6
+

@@ -1,0 +1,8 @@
+---
+- name: deploy ts ca scripts to all servers (windows)
+  hosts: all
+  remote_user: Administrator
+  
+  roles:
+    - ts-ca-scripts
+

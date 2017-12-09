@@ -1,0 +1,8 @@
+---
+- name: deploy saca(include saei) module to saca-servers
+  hosts: saca-servers
+  remote_user: Administrator
+  
+  roles:
+    - saca-module
+

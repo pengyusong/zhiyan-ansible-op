@@ -1,0 +1,14 @@
+---
+local_code_zip_filepath: "/home/work/deploy-packages/saeServers_V2/ts_ca_scripts/{{ version }}/ts_ca_scripts.zip"
+local_op_zip_filepath: "/home/work/deploy-packages/saeServers_V2/ts_ca_scripts/{{ version }}/op.zip"
+
+remote_code_path: "D:\\ansible_workspace\\ts_ca_scripts\\{{ version }}"
+remote_op_path: "D:\\ansible_online\\ts_ca_scripts\\{{ version }}"
+remote_sae_path: "D:\\production\\V2\\saeServers"
+
+configfilepath_backup_log_saei: "{{ remote_sae_path }}\\timescripts\\backup_log_saei\\config.py"
+configfilepath_restart_saei: "{{ remote_sae_path }}\\timescripts\\start_saei_for_reboot\\config.py"
+
+delete_all_scheduled_tasks: False
+config_all_scheduled_tasks: False
+

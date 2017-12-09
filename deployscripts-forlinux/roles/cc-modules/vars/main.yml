@@ -1,4 +1,7 @@
 ---
-local_ccx_path: "/home/work/deploy-packages/saeServers_V2/CC/{{ version }}"
-local_op_tar_gz_filepath: "/home/work/deploy-packages/saeServers_V2/CC/{{ version }}/op.tar.gz"
-remote_package_path: "/home/work/ansible_workspace/CC/{{ version }}"
+local_code_tgz_filepath: "/home/work/deploy-packages/saeServers_V2/cc_modules/{{ version }}/cc_modules.tgz"
+local_op_tgz_filepath: "/home/work/deploy-packages/saeServers_V2/cc_modules/{{ version }}/op.tgz"
+remote_code_path: "/home/work/ansible_workspace/cc_modules/{{ version }}"
+remote_op_path: "/home/work/ansible_online/cc_modules/{{ version }}"
+remote_sae_path: "/home/work/production/V2/saeServers"
+

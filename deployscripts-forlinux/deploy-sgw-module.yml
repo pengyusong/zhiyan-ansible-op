@@ -1,0 +1,21 @@
+---
+- name: deploy sgw module to gw-servers-t
+  hosts: gw-servers-t
+  remote_user: work
+  # remote_user: user
+  # become: yes
+  # become_method: sudo
+  
+  roles:
+    - { role: sgw-module, ENV: 0 }
+
+- name: deploy sgw module to gw-servers-p
+  hosts: gw-servers-p
+  remote_user: work
+  # remote_user: user
+  # become: yes
+  # become_method: sudo
+  
+  roles:
+    - { role: sgw-module, ENV: 1 }
+

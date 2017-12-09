@@ -1,0 +1,11 @@
+---
+local_code_zip_filepath: "/home/work/deploy-packages/saeServers_V2/saca_module/{{ version }}/saca_module.zip"
+local_op_zip_filepath: "/home/work/deploy-packages/saeServers_V2/saca_module/{{ version }}/op.zip"
+
+remote_code_path: "D:\\ansible_workspace\\saca_module\\{{ version }}"
+remote_op_path: "D:\\ansible_online\\saca_module\\{{ version }}"
+remote_sae_path: "D:\\production\\V2\\saeServers"
+
+delete_all_scheduled_tasks: False
+config_all_scheduled_tasks: False
+

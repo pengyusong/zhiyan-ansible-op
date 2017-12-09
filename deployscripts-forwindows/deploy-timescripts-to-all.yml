@@ -1,8 +1,0 @@
----
-- name: deploy timescripts to all tca/saca servers (windows)
-  hosts: all
-  remote_user: Administrator
-  
-  roles:
-    - timescripts
-

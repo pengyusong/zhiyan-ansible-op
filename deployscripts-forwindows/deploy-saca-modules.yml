@@ -1,8 +1,0 @@
----
-- name: deploy saca(include saei) modules to saca node agents
-  hosts: saca-servers
-  remote_user: Administrator
-  
-  roles:
-    - saca-modules
-

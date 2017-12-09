@@ -1,0 +1,11 @@
+---
+- name: deploy backuplog script to backuplog-servers (linux)
+  hosts: backuplog-servers
+  remote_user: work
+  # remote_user: user
+  # become: yes
+  # become_method: sudo
+  
+  roles:
+    - ts-backuplog-script
+

@@ -14,7 +14,7 @@ GateWay-Prod-T1
 [gw-servers-p]
 GateWay-Prod-P1
 
-[backup-log-servers]
+[backuplog-servers]
 CC-Prod-TP1
 GateWay-Prod-T1
 GateWay-Prod-P1

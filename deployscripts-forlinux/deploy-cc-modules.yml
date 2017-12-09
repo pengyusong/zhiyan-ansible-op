@@ -1,0 +1,11 @@
+---
+- name: deploy cc modules to cc-servers
+  hosts: cc-servers
+  remote_user: work
+  # remote_user: user
+  # become: yes
+  # become_method: sudo
+  
+  roles:
+    - cc-modules
+

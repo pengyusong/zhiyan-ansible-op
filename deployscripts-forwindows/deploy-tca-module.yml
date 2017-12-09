@@ -1,0 +1,8 @@
+---
+- name: deploy tca module to tca-servers
+  hosts: tca-servers
+  remote_user: Administrator
+  
+  roles:
+    - tca-module
+

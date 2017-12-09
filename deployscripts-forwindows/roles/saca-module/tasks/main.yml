@@ -1,0 +1,65 @@
+# deploy saca_saei{0|1|2}.zip
+
+---
+#- name: set current datetime var fact
+#  set_fact: 
+#    online_datetime: "{{lookup('pipe','date +%Y%m%d-%H%M%S')}}"
+#    delegate_to: 127.0.0.1
+
+- name: check remote op path exist
+  win_file: path={{ remote_op_path }} state=directory
+
+- name: check remote code path exist
+  win_file: path={{ remote_code_path }} state=directory
+
+- name: check remote sae path exist
+  win_file: path={{ remote_sae_path }} state=directory
+
+##################################################################
+
+# Windows 拷贝到目录需要后缀 '\'
+- name: copy op.zip to remote op path
+  win_copy:
+    src: "{{ local_op_zip_filepath }}"
+    dest: "{{ remote_op_path  }}\\"
+    remote_src: no
+  register: copy_op_zip_result
+
+# copy 成功且 changed is True
+- name: unzip op.zip to remote op path
+  win_unzip: 
+    src: "{{ remote_op_path }}\\op.zip"
+    dest: "{{ remote_op_path }}"
+  when: not ansible_check_mode and copy_op_zip_result.changed
+
+##################################################################
+    
+# Windows 拷贝到目录需要后缀 '\'
+- name: copy saca_module.zip to remote code path
+  win_copy:
+    src: "{{ local_code_zip_filepath }}"
+    dest: "{{ remote_code_path }}\\"
+    remote_src: no
+  register: copy_saca_module_zip_result
+
+- name: start online saca module
+  win_shell: "{{ remote_op_path }}\\ascripts_op\\WinSacaOnline.ps1 -OnlinePackageVersion {{ version }} >> online.log"
+  args:
+    chdir: "{{ remote_op_path }}"
+    creates: "online.log"
+
+- name: delete all scheduled tasks
+  win_shell: "{{ remote_op_path }}\\ascripts_op\\WinDeleteAllScheduledTasksForTcaOrSaca.ps1 >> online.log"
+  args:
+    chdir: "{{ remote_op_path }}"
+  when: delete_all_scheduled_tasks is defined and delete_all_scheduled_tasks == True
+
+- name: config all scheduled tasks
+  win_shell: "{{ remote_op_path }}\\ascripts_op\\WinConfigScheduledTasksForTcaOrSaca.ps1 -HostName {{ inventory_hostname }} >> online.log"
+  args:
+    chdir: "{{ remote_op_path }}"
+  when: config_all_scheduled_tasks is defined and config_all_scheduled_tasks == True
+
+#- debug: var=copy_op_zip_result
+#
+

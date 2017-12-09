@@ -1,0 +1,8 @@
+---
+local_code_tgz_filepath: "/home/work/deploy-packages/saeServers_V2/sgw_module/{{ version }}/sgw_module.tgz"
+local_op_tgz_filepath: "/home/work/deploy-packages/saeServers_V2/sgw_module/{{ version }}/op.tgz"
+remote_code_path: "/home/work/ansible_workspace/sgw_module/{{ version }}"
+remote_op_path: "/home/work/ansible_online/sgw_module/{{ version }}"
+
+# remote_sae_path: "/home/work/production/V2/saeServers"
+
