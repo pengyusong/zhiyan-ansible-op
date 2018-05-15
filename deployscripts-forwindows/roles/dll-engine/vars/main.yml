@@ -1,0 +1,8 @@
+---
+local_dll_zip_filepath: "/home/work/deploy-packages/ISIDir/dll_engine/{{ version }}/dll_engine.zip"
+local_op_zip_filepath: "/home/work/deploy-packages/ISIDir/dll_engine/{{ version }}/op.zip"
+
+remote_dll_path: "D:\\ansible_workspace\\ISIDir\\{{ version }}"
+remote_op_path: "D:\\ansible_online\\ISIDir\\{{ version }}"
+remote_sae_dll_path: "D:\\production\\V2\\saeServers\\train_backend\\ISIDir"
+

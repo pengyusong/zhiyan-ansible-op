@@ -1,0 +1,8 @@
+---
+- name: deploy dll engine to tca servers (windows)
+  hosts: tca-servers
+  remote_user: Administrator
+  
+  roles:
+    - dll-engine
+

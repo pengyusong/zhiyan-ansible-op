@@ -1,0 +1,67 @@
+# deploy timescripts.tar.gz
+
+---
+- name: check remote op path exist
+  win_file: path={{ remote_op_path }} state=directory
+
+- name: check remote dll path exist
+  win_file: path={{ remote_dll_path }} state=directory
+
+- name: check remote sae dll path exist
+  win_file: path={{ remote_sae_dll_path }} state=directory
+
+##################################################################
+
+# Windows 拷贝到目录需要后缀 '\'
+- name: copy op.zip to remote op path
+  win_copy:
+    src: "{{ local_op_zip_filepath }}"
+    dest: "{{ remote_op_path  }}\\"
+    remote_src: no
+  register: copy_op_zip_result
+
+# copy 成功且 changed is True
+- name: unzip op.zip to remote op path
+  win_unzip: 
+    src: "{{ remote_op_path }}\\op.zip"
+    dest: "{{ remote_op_path }}"
+  when: not ansible_check_mode and copy_op_zip_result.changed
+
+##################################################################
+    
+# Windows 拷贝到目录需要后缀 '\'
+- name: copy dll_engine.zip to remote dll path
+  win_copy:
+    src: "{{ local_dll_zip_filepath }}"
+    dest: "{{ remote_dll_path }}\\"
+    remote_src: no
+  register: copy_dll_engine_zip_result
+
+- name: start online dll engine
+  win_shell: "{{ remote_op_path }}\\ascripts_op\\WinDllEngineOnline.ps1 -OnlinePackageVersion {{ version }} >> online.log"
+  args:
+    chdir: "{{ remote_op_path }}"
+    creates: "online.log"
+
+#- name: debug var
+#  debug: var=config_backup_log_saei_file_path
+
+######################################################################
+#               Windows server 2008 not support win_scheduled task
+## Create a scheduled task to backup log
+#- name: Create a schedule task to backup log
+#  win_scheduled_task:
+#    name: '日志备份'
+#    description: '用来备份运行日志'
+#    executable: D:\production\V2\saeServers\timescripts\backup_log_saei\start_backup_log.bat
+#    enabled: yes
+#    frequency: weekly
+#    days_of_week: 2,6
+#    time: 03:10am
+#    path: \backup_log
+#    state: present
+#    user: System
+#    runlevel: highest
+#  tags:
+#    - scheduled
+#
